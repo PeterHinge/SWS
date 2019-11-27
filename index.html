@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" >
+  	<head>
+	    <!-- Meta tags -->
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <meta name="apple-mobile-web-app-capable" content="yes" user-scalable="no">
+
+	    <!-- Bootstrap CSS -->
+	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	    <title>Systematic AI trainer</title>
+
+	    <!-- Bootstrap logic -->
+	    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script>
+		    $(document).ready(function(){
+		        $("#welcomeScreen").modal('show');
+		    });
+		</script>
+    </head>
+    <body>
+		<!-- Navbar -->
+		<nav class="navbar navbar-dark bg-dark">
+		  <div class="input-group text-white">
+		    
+		    <button class="btn btn-danger" onclick="clearCanvas()">
+		      Clear!
+		    </button>
+		    &nbsp; &nbsp;
+		    <button class="btn btn-primary" data-toggle="modal" data-target="#hintScreen">
+		      Hint!
+		    </button>
+		    &nbsp; &nbsp;
+		    <button class="btn btn-success" data-toggle="modal" data-target="#postSessionScreen" onclick="submit()">
+		      Done!
+		    </button>
+			&nbsp; &nbsp;
+			<p>Draw: <strong><span id="symbolToDraw2"></span></strong></p>
+		  </div>
+		</nav>
+
+		<!-- Modals -->
+		<div class="modal fade" id="welcomeScreen" tabindex="-1" role="dialog" aria-labelledby="submit" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalCenterTitle">SITAWARE Sketch</h5>
+		      </div>
+		      <div class="modal-body" style="text-align: center">
+		      	<h3>Welcome to SITAWARE Sketch</h3>
+		        <img src="https://drive.google.com/uc?id=1aw4WT3Wv4pwWyjsud67C5h27U8TSq91W">
+		        <img src="https://drive.google.com/uc?id=15M7RFs_zfWaYhVK2XZ7VkIu2QDOhrWAy">
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal" data-toggle="modal" data-target="#preSessionScreen">Start Sketching!</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<div class="modal fade" id="preSessionScreen" tabindex="-1" role="dialog" aria-labelledby="submit" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">SITAWARE Sketch</h5>
+		      </div>
+		      <div class="modal-body" id="preSessionScreenBody1" style="text-align: center">
+		        <p>Please draw: <strong><span id="symbolToDraw1"></span></strong></p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal">I'm ready!</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<div class="modal fade" id="hintScreen" tabindex="-1" role="dialog" aria-labelledby="submit" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">SITAWARE Sketch</h5>
+		      </div>
+		      <div class="modal-body" id="hintScreenBody1" style="text-align: center">
+		        <p>Hint! Please draw: <strong><span id="symbolToDraw4"></span></strong></p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal">Okay thanks!</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<div class="modal fade" id="postSessionScreen" tabindex="-1" role="dialog" aria-labelledby="submit" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">SITAWARE Sketch</h5>
+		      </div>
+		      <div class="modal-body" id="postSessionScreenBody1" style="text-align: center">
+		      	<p>Symbol: <strong><span id="symbolToDraw3"></span></strong></p>
+		      </div>
+		      <div class="modal-body" id="postSessionScreenBody2" style="text-align: center">
+		      	<p>Your drawing:</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal" data-toggle="modal" data-target="#preSessionScreen">Next Symbol!</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<!-- Canvas -->
+		<div>
+			<canvas id="canvas"></canvas>
+		</div>
+
+		<!-- Google Sheets API -->
+		<script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
+		
+		<!-- Symbol generator files -->
+		<script src="node_modules/milsymbol/dist/milsymbol.js"></script>
+
+	    <!-- JavaScript files -->
+	    <script src="session.js"></script>
+	    <script src="canvas.js"></script>
+
+	    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
