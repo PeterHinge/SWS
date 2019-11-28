@@ -1,3 +1,11 @@
+/**!
+* A session is instantiated upon loading the site
+* To add more symbols, simply include its [Id, label/name] to allMilitarySymbols
+*/
+
+const allMilitarySymbols = [["SFGPUCA-----", "Friendly Armored"], ["SFGPUCF-----", "Friendly Artillery"], ["SFGPUCI-----", "Friendly Infantry"], 
+["SFGPUCR-----", "Friendly Reconnaisance"], ["SHGPUCA-----", "Hostile Armored"], ["SHGPUCF-----", "Hostile Artillery"], 
+["SHGPUCI-----", "Hostile Infantry"], ["SHGPUCR-----", "Hostile Reconnaisance"]];
 
 class Session {
 	constructor(canvas, context) {
@@ -13,9 +21,7 @@ class Session {
 		this.context = context;
 
 		//Possible symbols
-		this.symbolLabels = [["SFGPUCA-----", "Friendly Armored"], ["SFGPUCF-----", "Friendly Artillery"], ["SFGPUCI-----", "Friendly Infantry"], 
-		["SFGPUCR-----", "Friendly Reconnaisance"], ["SHGPUCA-----", "Hostile Armored"], ["SHGPUCF-----", "Hostile Artillery"], 
-		["SHGPUCI-----", "Hostile Infantry"], ["SHGPUCR-----", "Hostile Reconnaisance"]];
+		this.symbolLabels = allMilitarySymbols;
 
 		//Drawing-size, Image and binary pixel array
 		this.x1 = null;
@@ -114,36 +120,7 @@ class Session {
 			};
 		};
 
-		//Sending data to Google Sheets
-		var ssId = "1Cd8wcOJK-2IdsVheUnJGKxs6hRIx4CiVeJTW3S1peZ4"
-		var rng = "Sheet1"
-		
-		let labelData = this.currentSymbolName.toString();
-		let idData = this.currentSymbolCode.toString();
-		let xData = this.xArray.toString();
-		let yData = this.yArray.toString();
-		let tData = this.tArray.toString();
-		let pixelData = this.userDrawingArray.toString();
-
-		var vals = [this.currentSymbolName.toString(), this.currentSymbolCode.toString(), Date.now().toString(), this.xArray.toString(), this.yArray.toString(), this.tArray.toString(), this.userDrawingArray.toString()];
-
-		console.log(vals);
-
-		var params = {
-			spreadsheetId: ssId,
-			range: rng,
-			valueInputOption: "RAW"
-		};
-		var body = { "values": vals };
-		var request = gapi.client.sheets.spreadsheets.values.append(params, body);
-		request.then(function(response) {
-			console.log(response.result);
-		}, function(reason) {
-			console.error("error: " + reason.result.error.message);
-		});
-
-		//google.script.run.submitToSheets(dataToSend)
-
+		//Reset canvas
 		this.clearDrawing();
 
 		//Shows current drawing on post drawing screen

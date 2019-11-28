@@ -45,7 +45,7 @@ canvas.addEventListener("mousedown", beginDraw);
 canvas.addEventListener("mouseup", endDraw);
 canvas.addEventListener("mousemove", draw);
 
-// Set up touch events for mobile, etc
+// Set up touch events for mobile
 canvas.addEventListener("touchstart", function (e) {
     mousePos = getTouchPos(canvas, e);
   	var touch = e.touches[0];
